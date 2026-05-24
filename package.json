@@ -1,0 +1,18 @@
+{
+  "name": "alphamark",
+  "version": "1.0.0",
+  "private": true,
+  "author": "cheneydc <cheneydc@gmail.com>",
+  "description": "AlphaMark - AI-powered smart bookmark organizer",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules tests/classifier.test.js",
+    "test:classifier": "node --experimental-vm-modules tests/classifier.test.js",
+    "test:llm": "node --experimental-vm-modules tests/llm.test.js",
+    "test:history": "node --experimental-vm-modules tests/history.test.js",
+    "test:i18n": "node --experimental-vm-modules tests/i18n.test.js",
+    "test:bookmarks": "node --experimental-vm-modules tests/bookmarks.test.js",
+    "test:all": "node --experimental-vm-modules tests/classifier.test.js && node --experimental-vm-modules tests/llm.test.js && node --experimental-vm-modules tests/history.test.js && node --experimental-vm-modules tests/i18n.test.js && node --experimental-vm-modules tests/bookmarks.test.js",
+    "start": "echo 'Open chrome://extensions and load the AlphaMark directory'"
+  }
+}

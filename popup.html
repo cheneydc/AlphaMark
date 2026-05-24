@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="appName">AlphaMark</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title" data-i18n="title">📑 AlphaMark</h1>
+      <button id="optionsBtn" class="btn-icon" data-i18n-attr="title" data-i18n="settings">⚙</button>
+    </header>
+
+    <nav class="tabs">
+      <button id="tabBookmarks" class="tab active" data-i18n="tabBookmarks">书签整理</button>
+      <button id="tabHistory" class="tab" data-i18n="tabHistory">访问历史</button>
+    </nav>
+
+    <div id="bookmarkTab" class="tab-content">
+      <div id="mainView">
+        <div class="status-bar">
+          <span id="bookmarkCount" class="count" data-i18n="loading">正在加载...</span>
+          <label class="ai-toggle-inline hidden" id="aiToggleInline" title="AI 分析开关">
+            <span id="aiToggleBadge" class="ai-toggle-badge">🤖</span>
+            <span id="aiToggleLabel" class="ai-toggle-label">AI 分析</span>
+            <span class="ai-toggle-switch ai-toggle-switch-sm">
+              <input type="checkbox" id="aiToggleCheckbox">
+              <span class="ai-toggle-slider"></span>
+            </span>
+            <span id="aiToggleHint" class="ai-toggle-hint hidden"></span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="analyzeBtn" class="btn btn-primary" data-i18n="btnAnalyze">
+            🔍 分析书签
+          </button>
+          <div class="action-row">
+            <button id="organizeBtn" class="btn btn-success" disabled data-i18n="btnOrganize">
+              📂 整理书签
+            </button>
+            <button id="undoBtn" class="btn btn-warning hidden" data-i18n="btnUndo">
+              ↩ 撤销整理
+            </button>
+          </div>
+        </div>
+
+        <div id="suggestionBanner" class="suggestion-banner hidden">
+          <div class="suggestion-header">
+            <h3 class="suggestion-title">💡 <span data-i18n="suggestionTitle">LLM 分类建议</span></h3>
+            <span id="suggestionCount" class="suggestion-count">0</span>
+          </div>
+          <p id="suggestionSummary" class="suggestion-summary"></p>
+          <div id="suggestionList" class="suggestion-list"></div>
+          <div id="suggestionActions" class="suggestion-footer-actions hidden">
+            <button id="applyAllSuggestionsBtn" class="btn btn-success btn-sm-btn" data-i18n="suggestionApplyAll">📂 应用所有变更</button>
+            <button id="dismissAllSuggestionsBtn" class="btn btn-secondary btn-sm-btn" data-i18n="suggestionDismissAll">✕ 全部忽略</button>
+          </div>
+        </div>
+
+        <div id="progressContainer" class="progress-container hidden">
+          <div class="progress-track">
+            <div class="progress-bar">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <span id="progressText" class="progress-text">0%</span>
+          </div>
+          <button id="cancelAnalysisBtn" class="btn-stop hidden" title="停止分析">⏹</button>
+        </div>
+
+        <div id="previewContainer" class="preview-container hidden">
+          <h3 class="preview-title" data-i18n="previewTitle">分类预览</h3>
+          <div id="dryRunActions" class="dry-run-actions hidden">
+            <div id="dryRunSummary" class="dry-run-summary"></div>
+            <div class="dry-run-buttons">
+              <button id="startOrganizeBtn" class="btn btn-success" data-i18n="btnStartOrganize">🚀 开始整理</button>
+              <button id="cancelOrganizeBtn" class="btn btn-secondary" data-i18n="btnCancelOrganize">取消</button>
+            </div>
+          </div>
+          <div id="previewList" class="preview-list"></div>
+        </div>
+      </div>
+
+      <div id="resultView" class="hidden">
+        <div id="resultContent" class="result-content"></div>
+        <div class="result-actions">
+          <button id="backBtn" class="btn btn-secondary" data-i18n="btnBack">返回</button>
+          <button id="restoreBtn" class="btn btn-warning hidden" data-i18n="btnRestore">↩ 从备份恢复</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="historyTab" class="tab-content" hidden>
+      <div class="history-summary">
+        <span id="historyPeriod" class="history-period">最近 3 个月</span>
+        <button id="refreshHistoryBtn" class="btn btn-secondary btn-sm-btn" data-i18n="btnRefresh">🔄 刷新</button>
+      </div>
+      <div id="historyStats" class="history-stats">
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="statTotalVisits">总访问量</span>
+          <span id="totalVisits" class="stat-value">-</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="statUniqueDomains">独立域名</span>
+          <span id="uniqueDomains" class="stat-value">-</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="statUniqueUrls">独立页面</span>
+          <span id="uniqueUrls" class="stat-value">-</span>
+        </div>
+      </div>
+      <div id="historyList" class="history-list">
+        <p class="history-loading" data-i18n="historyLoading">加载中...</p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <button id="exportBtn" class="btn-text" data-i18n="btnExport">导出书签备份</button>
+      <span class="footer-sep">|</span>
+      <button id="restoreFooterBtn" class="btn-text hidden" data-i18n="btnRestore">↩ 从备份恢复</button>
+    </footer>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
