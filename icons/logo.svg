@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e94560"/>
+      <stop offset="100%" stop-color="#ff6b6b"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect x="4" y="4" width="120" height="120" rx="24" fill="url(#bg)"/>
+
+  <!-- Bookmark shape (rounded top, V-notch bottom) -->
+  <path d="
+    M 42 24
+    L 86 24
+    Q 96 24 96 34
+    L 96 80
+    Q 96 88 88 90
+    L 64 104
+    L 40 90
+    Q 32 88 32 80
+    L 32 34
+    Q 32 24 42 24
+    Z
+  " fill="url(#main)" opacity="0.92"/>
+
+  <!-- Bookmark highlight/reflection -->
+  <path d="
+    M 42 28
+    L 70 28
+    Q 78 28 78 34
+    L 78 60
+    L 64 68
+    L 50 60
+    L 50 34
+    Q 50 28 56 28
+  " fill="#ffffff" opacity="0.10"/>
+
+  <!-- A letter cutout (negative space) -->
+  <!-- Left leg -->
+  <line x1="52" y1="88" x2="64" y2="40" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round"/>
+  <!-- Right leg -->
+  <line x1="76" y1="88" x2="64" y2="40" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round"/>
+  <!-- Crossbar -->
+  <line x1="50" y1="68" x2="78" y2="68" stroke="#1a1a2e" stroke-width="5" stroke-linecap="round"/>
+</svg>
