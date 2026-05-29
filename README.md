@@ -1,80 +1,92 @@
-# AlphaMark — AI-Powered Smart Bookmark Organizer
+<p align="right">
+  <a href="README_EN.md">English</a> · <strong>中文</strong>
+</p>
 
-A Chrome Extension (Manifest V3) that intelligently classifies and organizes your bookmarks using **keyword matching + LLM semantic analysis + browsing history insights**.
+<h1 align="center">AlphaMark — AI 智能书签整理工具</h1>
 
----
+<p align="center">
+  基于 <strong>Manifest V3</strong> 的 Chrome 扩展，通过<strong>关键词匹配 + LLM 语义分析 + 浏览历史洞察</strong>，智能分类和整理你的浏览器书签。
+</p>
 
-## Features
-
-### 📊 Smart Bookmark Analysis
-- **Dual-engine classification**: Keyword matching (14 built-in categories, 380+ keywords) + LLM semantic classification (Gemini / OpenAI / custom API)
-- **Browsing history integration**: Frequently visited sites get higher classification priority
-- **Real-time progress**: Live progress tracking with push + poll dual-channel updates
-- **Persistent results**: Analysis results survive popup close — reopen to continue where you left off
-
-### 🧠 AI-Powered Suggestions
-- **Smart bookmark recommendations**: When you bookmark a new page, AlphaMark analyzes it and suggests the best category folder
-- **Context-aware**: Won't suggest if the bookmark is already in the right folder
-- **Review before acting**: Confirm or dismiss suggestions in the popup banner
-- **Badge notifications**: Extension icon shows pending suggestion count
-
-### 🔧 Bookmark Management
-- **Batch organize**: Move hundreds of bookmarks into categorized folders with one click
-- **Undo support**: Full undo with 3-tier fallback recovery (direct → path → Other Bookmarks)
-- **Backup & restore**: Export/import bookmark backups as JSON
-- **Category management**: Customize categories and keywords in settings
-
-### ⚡ Performance
-- **Pre-computed keyword lookup**: Module-initialized normalized keyword tables eliminate 380K regex calls
-- **Config persistence**: Settings survive extension reload, upgrade, and Service Worker restart
-- **Efficient memory**: Analysis state cleaned up promptly after use
+<p align="center">
+  <a href="https://github.com/cheneydc/AlphaMark/blob/main/docs/privacy.html">隐私政策</a>
+  ·
+  <a href="https://github.com/cheneydc/AlphaMark/issues">反馈建议</a>
+</p>
 
 ---
 
-## Installation
+## 功能特性
 
-1. Open `chrome://extensions` in Chrome / Edge / Brave
-2. Enable **Developer Mode** (top-right toggle)
-3. Click **Load unpacked** and select the project directory
-4. Pin the AlphaMark icon to your toolbar
+### 📊 智能书签分析
+- **双引擎分类**：关键词引擎（14 个内置类别、380+ 关键词） + LLM 语义分类（Gemini / OpenAI / 自定义 API）
+- **浏览历史集成**：高频访问的站点获得更高分类优先级
+- **实时进度追踪**：推送 + 轮询双通道实时更新分析进度条
+- **结果持久化**：关闭弹窗后分析继续，重开立即恢复当前进度
 
-## Quick Start
+### 🧠 AI 智能推荐
+- **新书签推荐**：收藏新页面时自动分析，推荐最佳分类目录
+- **智能去重**：书签已在匹配的目录中时不打扰
+- **确认再操作**：在弹窗横幅中确认或忽略建议
+- **角标提醒**：扩展图标显示待确认建议数量
 
-1. Click the AlphaMark icon to open the popup
-2. Click **🔍 Analyze** to classify all bookmarks
-3. Review the preview — expand categories to see details
-4. Click **📂 Start Organizing** to move bookmarks into folders
+### 🔧 书签管理
+- **批量整理**：一键将数百个书签移入分类目录
+- **撤销支持**：三级回退机制（直接 → 路径 → 其他书签）
+- **备份恢复**：JSON 格式导出/导入书签备份
+- **分类管理**：设置中自定义类别和关键词
 
-### Enable AI Classification
-
-1. Click ⚙ to open Settings
-2. Enable **🤖 AI Model** and configure your provider:
-   - **API URL**: `https://api.openai.com/v1` (or Gemini / custom endpoint)
-   - **Model**: `gpt-4o-mini` (or your preferred model)
-   - **API Key**: Your provider's API key
-3. Click **Test Connection** to verify
-4. Save and toggle **AI** on in the popup
-
-> 💡 **Free option**: [Google Gemini](https://aistudio.google.com/apikey) offers free API quotas.
-
-### Smart Suggestions for New Bookmarks
-
-1. In popup, enable the **AI toggle** 🤖
-2. Bookmark any new page — AlphaMark analyzes it automatically
-3. Open the popup to see the suggestion banner
-4. Click **Confirm** to move to the suggested folder, or **Dismiss** to ignore
+### ⚡ 性能优化
+- **预计算关键词表**：模块初始化时预归一化，消除 38 万次正则调用
+- **配置持久化**：扩展重载、升级、Service Worker 重启均不丢失设置
+- **内存管理**：分析/整理完成后及时释放缓存
 
 ---
 
-## Architecture
+## 安装
+
+1. 打开 `chrome://extensions`（Chrome / Edge / Brave）
+2. 开启右上角**开发者模式**
+3. 点击**加载已解压的扩展程序**，选择项目目录
+4. 将 AlphaMark 图标固定到工具栏
+
+## 快速开始
+
+1. 点击 AlphaMark 图标打开弹窗
+2. 点击 **🔍 分析书签** 对所有书签进行分类
+3. 查看分类预览，点击类别展开详情
+4. 点击 **📂 开始整理** 将书签移入分类目录
+
+### 启用 AI 分类
+
+1. 点击 ⚙ 进入设置
+2. 开启 **🤖 AI 大模型设置**并配置：
+   - **API 地址**：`https://api.openai.com/v1`（或其他兼容端点）
+   - **模型名称**：`gpt-4o-mini`（或其他模型）
+   - **API Key**：你的 API 密钥
+3. 点击**测试连接**验证
+4. 保存后在弹窗中开启 **AI** 开关
+
+> 💡 **免费方案**：[Google Gemini](https://aistudio.google.com/apikey) 提供免费 API 配额。
+
+### 新书签智能推荐
+
+1. 弹窗中开启 **AI 开关** 🤖
+2. 收藏任意新页面 — AlphaMark 自动分析
+3. 打开弹窗查看建议横幅
+4. 点击**确认**移入推荐目录，或**忽略**
+
+---
+
+## 架构
 
 ```
 ┌─────────────────────────────────────────────┐
 │                  popup.html                  │
 │  ┌───────────┐  ┌──────────┐                │
-│  │ Bookmarks │  │  History │                │
-│  │  · Analyze│  │  · Stats │                │
-│  │  · Preview│  │  · Top 20│                │
+│  │ 书签整理   │  │ 访问历史  │                │
+│  │  · 分析   │  │  · 统计  │                │
+│  │  · 预览   │  │  · 热门  │                │
 │  └─────┬─────┘  └──────────┘                │
 └────────┼────────────────────────────────────┘
          │  chrome.runtime.sendMessage
@@ -96,57 +108,57 @@ A Chrome Extension (Manifest V3) that intelligently classifies and organizes you
        ▼              ▼               ▼
 ┌──────────┐  ┌────────────┐  ┌──────────────┐
 │bookmarks │  │ Fetch API  │  │chrome.history│
-│书签 CRUD │  │ 30s timeout│  │    API       │
+│书签 CRUD │  │ 30s 超时   │  │    API       │
 └──────────┘  └────────────┘  └──────────────┘
 ```
 
-## File Structure
+## 文件结构
 
-| File | Responsibility |
-|------|---------------|
-| `manifest.json` | Extension config, permissions, entry points |
-| `classifier.js` | Keyword classification engine (32 categories, 800+ keywords, pre-computed lookups) |
-| `bookmarks.js` | Bookmark tree traversal, folder CRUD, batch move, undo/restore |
-| `llm.js` | LLM provider abstraction (OpenAI-compatible / custom endpoint), prompt construction, response parsing |
-| `history.js` | Chrome History API wrapper, domain aggregation, visit-frequency weighting |
-| `background.js` | Service Worker: analysis orchestration, suggestion system, message routing, state management |
-| `popup.html/css/js` | Popup UI: analysis progress, category preview, suggestions banner, history stats |
-| `options.html/css/js` | Settings UI: LLM config, history range, category management |
-| `i18n.js` | Chinese/English translations |
+| 文件 | 职责 |
+|------|------|
+| `manifest.json` | 扩展配置、权限声明、入口点 |
+| `classifier.js` | 关键词分类引擎（32 类别、800+ 关键词、预计算查找表） |
+| `bookmarks.js` | 书签树遍历、文件夹 CRUD、批量移动、撤销恢复 |
+| `llm.js` | LLM 提供商抽象层（OpenAI 兼容 / 自定义端点）、prompt 构建、响应解析 |
+| `history.js` | Chrome History API 封装、域名聚合、访问频率加权 |
+| `background.js` | Service Worker：分析编排、建议系统、消息路由、状态管理 |
+| `popup.html/css/js` | 弹窗 UI：分析进度、分类预览、建议横幅、历史统计 |
+| `options.html/css/js` | 设置 UI：LLM 配置、历史范围、分类管理 |
+| `i18n.js` | 中英双语支持 |
 
-## Permissions
+## 权限说明
 
-| Permission | Purpose |
-|-----------|---------|
-| `bookmarks` | Read, create, move bookmarks |
-| `storage` | Save user config (LLM keys, history range, categories) |
-| `tabs` | Interact with current tab |
-| `history` | Read browsing history for weight analysis |
-| `host_permissions` | Fetch page HTML for content extraction |
+| 权限 | 用途 |
+|------|------|
+| `bookmarks` | 读取、创建、移动书签 |
+| `storage` | 保存用户配置（LLM 密钥、历史范围、分类设置） |
+| `tabs` | 与当前标签页交互 |
+| `history` | 读取浏览历史用于权重分析 |
+| `host_permissions` | 抓取网页 HTML 进行内容提取 |
 
-## Classification Pipeline
+## 分类流程
 
 ```
-Bookmark (URL + Title)
+书签 (URL + 标题)
     │
-    ├── 1. Domain match ──────► High-confidence result
-    │    (weight ≥ 8 keyword in hostname)
+    ├── 1. 域名匹配 ──────► 高置信度结果
+    │    (weight ≥ 8 关键词出现在域名中)
     │
-    ├── 2. Keyword scoring ───► Score every category
-    │    (> 380 keywords × 2 languages)
+    ├── 2. 关键词打分 ────► 所有类别计分
+    │    (> 380 关键词 × 中英双语)
     │
-    ├── 3. LLM semantic ──────► If enabled & configured
-    │    (batched, 3 concurrent calls max)
+    ├── 3. LLM 语义分类 ──► 如已启用且配置完整
+    │    (分批发送，最多 3 路并发)
     │
-    └── 4. Fallback ──────────► Domain-derived category name
+    └── 4. 兜底处理 ──────► 域名提取类别名
 ```
 
-**Confidence levels**: `high` (score ≥ 15), `medium` (≥ 8), `low` (< 8)
+**置信度三级制**：`high`（得分 ≥ 15）、`medium`（≥ 8）、`low`（< 8）
 
-## Built-in Categories (32)
+## 内置类别（32 个）
 
-| Category | Example Sites |
-|----------|--------------|
+| 类别 | 代表站点 |
+|------|---------|
 | 社交与通讯 | facebook, twitter, weibo, bilibili |
 | 新闻与资讯 | bbc, reuters, techcrunch, 今日头条 |
 | 技术与编程 | github, stackoverflow, npm, docker, CSDN |
@@ -180,26 +192,26 @@ Bookmark (URL + Title)
 | 数据与AI资产 | dataset, spark, tableau, powerbi |
 | 企业服务 | sap, salesforce, datadog, okta |
 
-## Development
+## 开发
 
 ```bash
-# Run all unit tests (1144 tests)
+# 运行全部单元测试（1144 个）
 npm run test:all
 
-# Run individual test suites
-npm run test:classifier   # 88 tests
-npm run test:llm          # 55 tests
-npm run test:history      # 47 tests
-npm run test:i18n         # 11 tests
-npm run test:bookmarks    # 21 tests
+# 单独运行各模块测试
+npm run test:classifier   # 88 个测试
+npm run test:llm          # 55 个测试
+npm run test:history      # 47 个测试
+npm run test:i18n         # 11 个测试
+npm run test:bookmarks    # 21 个测试
 
-# Load extension in Chrome
+# 在 Chrome 中加载扩展
 npm start
 ```
 
-### LLM Providers
+### LLM 提供商
 
-AlphaMark supports any OpenAI-compatible API endpoint. Configure in Settings:
+AlphaMark 支持所有 OpenAI 兼容的 API 端点。在设置中配置：
 
 ```json
 {
@@ -210,33 +222,33 @@ AlphaMark supports any OpenAI-compatible API endpoint. Configure in Settings:
 }
 ```
 
-Supported providers: OpenAI, Google Gemini, any OpenAI-compatible endpoint (Ollama, LM Studio, etc.)
+支持的提供商：OpenAI、Google Gemini、任意 OpenAI 兼容端点（Ollama、LM Studio 等）
 
-### Key Design Decisions
+### 关键设计决策
 
-| Decision | Rationale |
-|----------|----------|
-| Keyword + LLM dual-engine | Keyword is 0-cost and fast; LLM handles long-tail sites |
-| Push + poll progress | Messages for speed, polling for popup-reopen reliability |
-| Suggestion over auto-move | User remains in control; suggestions shown in popup banner |
-| chrome.storage.local for results | Persists across popup close/service worker restart |
-| Pre-computed keyword lookup | Eliminates 380K regex calls per analysis |
+| 决策 | 原因 |
+|------|------|
+| 关键词 + LLM 双引擎 | 关键词零成本且极快；LLM 处理长尾站点 |
+| 推送 + 轮询双通道进度 | 推送保证实时性，轮询保证弹窗重开可靠性 |
+| 建议而非自动移动 | 用户保持控制权，建议在弹窗中确认 |
+| chrome.storage.local 持久化结果 | 弹窗关闭/Service Worker 重启后不丢失 |
+| 预计算关键词查找表 | 消除每次分析 38 万次正则调用 |
 
 ---
 
-## Author
+## 作者
 
 **cheneydc** · [cheneydc@gmail.com](mailto:cheneydc@gmail.com)
 
-## Tech Stack
+## 技术栈
 
-| Layer | Technology |
-|-------|-----------|
-| Extension Framework | Chrome Extension Manifest V3 |
-| Background | Service Worker (ES Modules) |
-| Frontend | Native HTML/CSS/JS — zero framework dependencies |
-| Communication | `chrome.runtime.sendMessage` |
-| Storage | `chrome.storage.sync` (config) + `chrome.storage.local` (data) |
-| APIs | `chrome.bookmarks`, `chrome.history`, `chrome.action` |
-| LLM Integration | OpenAI-compatible REST API (30s timeout, 3 concurrent calls) |
-| Classification | Weighted keyword matching + domain match + LLM semantic |
+| 层面 | 技术选型 |
+|------|---------|
+| 扩展框架 | Chrome Extension Manifest V3 |
+| 后台进程 | Service Worker (ES Modules) |
+| 前端 UI | 原生 HTML/CSS/JS — 零框架依赖 |
+| 通信机制 | `chrome.runtime.sendMessage` |
+| 数据存储 | `chrome.storage.sync`（配置） + `chrome.storage.local`（数据） |
+| API | `chrome.bookmarks`、`chrome.history`、`chrome.action` |
+| LLM 集成 | OpenAI 兼容 REST API（30s 超时、3 路并发） |
+| 分类算法 | 加权关键词匹配 + 域名精确匹配 + LLM 语义分析 |
