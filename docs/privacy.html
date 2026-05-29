@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy · AlphaMark</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #e94560, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; }
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #e94560;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #2a2a4a;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ccc;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    p { margin-bottom: 12px; color: #bbb; }
+    ul { margin: 8px 0 16px 20px; }
+    li { margin-bottom: 6px; color: #999; }
+    strong { color: #ddd; }
+    .lang-toggle {
+      display: inline-flex;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .lang-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      color: #888;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { border-color: #e94560; color: #e94560; }
+    .lang-btn.active { background: #e94560; color: #fff; border-color: #e94560; }
+    .section-divider {
+      margin: 48px 0;
+      border: none;
+      border-top: 1px solid #2a2a4a;
+    }
+    footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #2a2a4a; font-size: 13px; color: #666; text-align: center; }
+    a { color: #64b5f6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .badge {
+      display: inline-block;
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1>AlphaMark</h1>
+    <p class="subtitle">Privacy Policy / 隐私政策</p>
+
+    <!-- === ENGLISH === -->
+    <section id="en">
+      <h2>Privacy Policy</h2>
+      <p><strong>Last updated:</strong> May 29, 2026</p>
+
+      <p>AlphaMark is a Chrome extension that helps you organize your bookmarks using AI. <strong>We do not collect, store, or transmit any personal data.</strong> <span class="badge">NO DATA COLLECTION</span></p>
+
+      <h3>Data Processing</h3>
+      <p>All bookmark data, browsing history, and configuration settings are processed <strong>locally within your browser</strong> using Chrome's built-in APIs:</p>
+      <ul>
+        <li><strong>chrome.bookmarks</strong> — Read and organize your bookmark tree. Data never leaves your browser.</li>
+        <li><strong>chrome.storage</strong> — Save your preferences (AI config, categories, analysis results). All stored locally.</li>
+        <li><strong>chrome.history</strong> — Aggregate visit frequency to improve classification accuracy. Processed locally only.</li>
+        <li><strong>chrome.tabs</strong> — Read current tab URL/title when you bookmark a new page, to suggest a category.</li>
+      </ul>
+
+      <h3>LLM / AI Analysis</h3>
+      <p>If you enable AI-powered classification, page content may be sent to the LLM API endpoint you configure (e.g., OpenAI, Gemini, or a custom endpoint).</p>
+      <ul>
+        <li>You must provide your own API key — AlphaMark does not provide or manage any API keys.</li>
+        <li>The API endpoint is fully configurable. You choose which provider to use.</li>
+        <li>AlphaMark <strong>does not have access</strong> to the data sent to or received from the LLM API.</li>
+        <li>AI analysis is optional and disabled by default.</li>
+      </ul>
+
+      <h3>Network Access</h3>
+      <p>Host permissions are required solely to fetch page HTML content for LLM analysis. No data is sent to any server other than the LLM endpoint you explicitly configure.</p>
+
+      <h3>Third-Party Services</h3>
+      <p>AlphaMark does not use any analytics, tracking, telemetry, or third-party data collection services of any kind.</p>
+
+      <h3>Data Storage</h3>
+      <ul>
+        <li><strong>Config &amp; results:</strong> Stored in <code>chrome.storage.local</code> and <code>chrome.storage.sync</code>. Remains on your device.</li>
+        <li><strong>Bookmark backup:</strong> Exported JSON files are saved to your local machine via browser download — never uploaded anywhere.</li>
+        <li><strong>Uninstall:</strong> When you uninstall the extension, all local data is automatically removed by Chrome.</li>
+      </ul>
+
+      <h3>Contact</h3>
+      <p>If you have any questions about this privacy policy, please open an issue on GitHub or contact us at <a href="mailto:cheneydc@gmail.com">cheneydc@gmail.com</a>.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- === 中文 === -->
+    <section id="cn">
+      <h2>隐私政策</h2>
+      <p><strong>更新日期：</strong>2026 年 5 月 29 日</p>
+
+      <p>AlphaMark 是一款帮助您使用 AI 整理书签的 Chrome 扩展程序。<strong>我们不会收集、存储或传输任何个人数据。</strong> <span class="badge">不收集数据</span></p>
+
+      <h3>数据处理方式</h3>
+      <p>所有书签数据、浏览历史记录和配置设置均在<strong>您的浏览器本地</strong>处理，仅使用 Chrome 内置 API：</p>
+      <ul>
+        <li><strong>chrome.bookmarks</strong> — 读取和整理您的书签树。数据不会离开您的浏览器。</li>
+        <li><strong>chrome.storage</strong> — 保存您的偏好设置（AI 配置、分类、分析结果）。全部存储在本地。</li>
+        <li><strong>chrome.history</strong> — 聚合访问频率以提高分类准确率。仅在本地处理。</li>
+        <li><strong>chrome.tabs</strong> — 新增书签时读取当前标签页 URL 和标题，用于推荐分类。</li>
+      </ul>
+
+      <h3>LLM / AI 分析</h3>
+      <p>如果您启用 AI 分类功能，网页内容可能会被发送到您配置的 LLM API 地址（例如 OpenAI、Gemini 或自定义端点）。</p>
+      <ul>
+        <li>您必须提供自己的 API Key — AlphaMark 不提供也不管理任何 API Key。</li>
+        <li>API 端点完全可配置，您自行选择使用的供应商。</li>
+        <li>AlphaMark <strong>无法访问</strong>发送到 LLM API 或从 LLM API 接收的数据。</li>
+        <li>AI 分析为可选功能，默认关闭。</li>
+      </ul>
+
+      <h3>网络访问</h3>
+      <p>主机权限仅用于获取网页 HTML 内容以供 LLM 分析。除您明确配置的 LLM 端点外，不会向任何服务器发送数据。</p>
+
+      <h3>第三方服务</h3>
+      <p>AlphaMark 不使用任何分析、跟踪、遥测或第三方数据收集服务。</p>
+
+      <h3>数据存储</h3>
+      <ul>
+        <li><strong>配置和分析结果：</strong>存储在 <code>chrome.storage.local</code> 和 <code>chrome.storage.sync</code> 中，保留在您的设备上。</li>
+        <li><strong>书签备份：</strong>导出的 JSON 文件通过浏览器下载保存到您的本地电脑 — 不会上传到任何地方。</li>
+        <li><strong>卸载：</strong>卸载扩展程序后，Chrome 会自动清除所有本地数据。</li>
+      </ul>
+
+      <h3>联系方式</h3>
+      <p>如果您对本隐私政策有任何疑问，请在 GitHub 上提交 Issue 或通过 <a href="mailto:cheneydc@gmail.com">cheneydc@gmail.com</a> 联系我们。</p>
+    </section>
+
+    <footer>
+      <p><a href="https://github.com/cheneydc/AlphaMark">github.com/cheneydc/AlphaMark</a></p>
+    </footer>
+
+  </div>
+</body>
+</html>
