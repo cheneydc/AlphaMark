@@ -171,6 +171,23 @@ const translations = {
 
     // 分类
     uncategorized: '未分类',
+
+    // 赞赏支持 (popup modal)
+    supportBtn: '☕ 赞赏',
+    supportBtnTitle: '赞赏支持',
+    supportModalTitle: '☕ 赞赏支持',
+    supportModalDesc: '如果你喜欢 AlphaMark，欢迎扫码赞赏 ❤️',
+    supportWechat: '微信',
+    supportAlipay: '支付宝',
+
+    // AI toggle
+    aiToggleLabel: 'AI 分析',
+
+    // Options - Support sidebar
+    supportSidebarTitle: '☕ 赞赏支持',
+    supportSidebarDesc: '如果你喜欢 AlphaMark，欢迎扫码赞赏 ❤️',
+    supportSidebarWechat: '微信',
+    supportSidebarAlipay: '支付宝',
   },
 
   en: {
@@ -340,6 +357,23 @@ const translations = {
 
     // Categories
     uncategorized: 'Uncategorized',
+
+    // Support (popup modal)
+    supportBtn: '☕ Support',
+    supportBtnTitle: 'Support this project',
+    supportModalTitle: '☕ Support AlphaMark',
+    supportModalDesc: 'If you like AlphaMark, scan to support ❤️',
+    supportWechat: 'WeChat',
+    supportAlipay: 'Alipay',
+
+    // AI toggle
+    aiToggleLabel: 'AI Analyze',
+
+    // Options - Support sidebar
+    supportSidebarTitle: '☕ Support AlphaMark',
+    supportSidebarDesc: 'If you like AlphaMark, scan to support ❤️',
+    supportSidebarWechat: 'WeChat',
+    supportSidebarAlipay: 'Alipay',
   }
 };
 
@@ -347,6 +381,19 @@ let currentLang = 'zh';
 
 function detectLang() {
   try {
+    // Primary: detect by timezone (user's actual location)
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (tz) {
+      const cnTimezones = [
+        'Asia/Shanghai', 'Asia/Chongqing', 'Asia/Urumqi',
+        'Asia/Harbin', 'Asia/Kashgar', 'Asia/Macau', 'Asia/Hong_Kong'
+      ];
+      if (cnTimezones.includes(tz)) return 'zh';
+      // Also treat Taiwan, Singapore timezones as Chinese-adjacent
+      // (both are in UTC+8 and commonly use Chinese)
+      if (tz === 'Asia/Taipei') return 'zh';
+    }
+    // Fallback: browser language
     const navLang = navigator.language || navigator.userLanguage || '';
     if (navLang.startsWith('zh')) return 'zh';
     const acceptLangs = navigator.languages || [];

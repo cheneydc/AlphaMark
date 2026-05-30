@@ -3,3 +3,7 @@ node_modules/
 *.log
 .DS_Store?
 *.zip
+screenshot/
+store_assets/
+icons/*_reward.png
+.omo/

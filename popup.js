@@ -175,6 +175,21 @@ function bindEvents() {
   document.getElementById('tabBookmarks').addEventListener('click', () => switchTab('bookmark'));
   document.getElementById('tabHistory').addEventListener('click', () => switchTab('history'));
   document.getElementById('refreshHistoryBtn').addEventListener('click', () => loadHistory());
+
+  // Support modal
+  document.getElementById('supportBtn').addEventListener('click', showSupportModal);
+  document.getElementById('supportModalClose').addEventListener('click', hideSupportModal);
+  document.getElementById('supportModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) hideSupportModal();
+  });
+}
+
+function showSupportModal() {
+  document.getElementById('supportModal').classList.remove('hidden');
+}
+
+function hideSupportModal() {
+  document.getElementById('supportModal').classList.add('hidden');
 }
 
 function switchTab(tab) {

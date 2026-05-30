@@ -10,7 +10,10 @@
   <div class="container">
     <header class="header">
       <h1 class="title"><img src="icons/icon128.png" class="logo-icon" alt=""> AlphaMark</h1>
-      <button id="optionsBtn" class="btn-icon" data-i18n-attr="title" data-i18n="settings">⚙</button>
+      <div class="header-actions">
+        <button id="supportBtn" class="btn-support-header" data-i18n-attr="title" data-i18n="supportBtnTitle"><span data-i18n="supportBtn">☕ 赞赏</span></button>
+        <button id="optionsBtn" class="btn-icon" data-i18n-attr="title" data-i18n="settings">⚙</button>
+      </div>
     </header>
 
     <nav class="tabs">
@@ -24,7 +27,7 @@
           <span id="bookmarkCount" class="count" data-i18n="loading">正在加载...</span>
           <label class="ai-toggle-inline hidden" id="aiToggleInline" title="AI 分析开关">
             <span id="aiToggleBadge" class="ai-toggle-badge">🤖</span>
-            <span id="aiToggleLabel" class="ai-toggle-label">AI 分析</span>
+            <span id="aiToggleLabel" class="ai-toggle-label" data-i18n="aiToggleLabel">AI 分析</span>
             <span class="ai-toggle-switch ai-toggle-switch-sm">
               <input type="checkbox" id="aiToggleCheckbox">
               <span class="ai-toggle-slider"></span>
@@ -94,7 +97,7 @@
 
     <div id="historyTab" class="tab-content" hidden>
       <div class="history-summary">
-        <span id="historyPeriod" class="history-period">最近 3 个月</span>
+          <span id="historyPeriod" class="history-period" data-i18n="historyPeriod">最近 3 个月</span>
         <button id="refreshHistoryBtn" class="btn btn-secondary btn-sm-btn" data-i18n="btnRefresh">🔄 刷新</button>
       </div>
       <div id="historyStats" class="history-stats">
@@ -121,6 +124,25 @@
       <span class="footer-sep">|</span>
       <button id="restoreFooterBtn" class="btn-text hidden" data-i18n="btnRestore">↩ 从备份恢复</button>
     </footer>
+  </div>
+
+  <!-- 赞赏码弹窗 -->
+  <div id="supportModal" class="support-modal-overlay hidden">
+    <div class="support-modal">
+      <button id="supportModalClose" class="support-modal-close">✕</button>
+      <h3 class="support-modal-title" data-i18n="supportModalTitle">☕ 赞赏支持</h3>
+      <p class="support-modal-desc" data-i18n="supportModalDesc">如果你喜欢 AlphaMark，欢迎扫码赞赏 ❤️</p>
+      <div class="support-modal-qrcodes">
+        <div class="support-qr-item">
+          <img src="icons/wechat_reward.png" alt="微信赞赏码" class="support-qr-img" id="wechatQr">
+          <span class="support-qr-label" data-i18n="supportWechat">微信</span>
+        </div>
+        <div class="support-qr-item">
+          <img src="icons/alipay_reward.png" alt="支付宝赞赏码" class="support-qr-img" id="alipayQr">
+          <span class="support-qr-label" data-i18n="supportAlipay">支付宝</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="popup.js" type="module"></script>
