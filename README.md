@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/cheneydc/AlphaMark/blob/main/docs/privacy.html">隐私政策</a>
+  <a href="https://cheneydc.github.io/AlphaMark/privacy.html">隐私政策</a>
   ·
   <a href="https://github.com/cheneydc/AlphaMark/issues">反馈建议</a>
 </p>
