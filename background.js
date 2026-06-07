@@ -6,6 +6,9 @@ import { getHistorySummary, getTopSitesByHistory, mergeHistoryWeight, getHistory
 const FIRST_SCAN_DONE_KEY = 'abookmark_first_scan_done';
 const AI_TOGGLE_KEY = 'abookmark_ai_toggle';
 const ANALYSIS_RESULT_KEY = 'abookmark_latest_analysis';
+const CONSENT_KEY = 'abookmark_user_consent';
+const PRIVACY_CONFIG_KEY = 'abookmark_privacy_config';
+const DEFAULT_PRIVACY_CONFIG = { allowHistory: true };
 
 let operationSnapshot = null;
 let deletedFoldersSnapshot = null;
@@ -152,11 +155,14 @@ async function analyzeBookmarks(progressCallback) {
 
   const total = bookmarks.length;
 
-  // 合并历史权重
+  // 合并历史权重（受隐私设置控制）
   progressCallback({ status: 'collecting', total, processed: 0 });
 
+  const privacyStored = await chrome.storage.local.get(PRIVACY_CONFIG_KEY);
+  const privacy = { ...DEFAULT_PRIVACY_CONFIG, ...(privacyStored[PRIVACY_CONFIG_KEY] || {}) };
+
   let weightedBookmarks = bookmarks;
-  if (historyConfig.includeHistoryInAnalysis) {
+  if (privacy.allowHistory && historyConfig.includeHistoryInAnalysis) {
     weightedBookmarks = await mergeHistoryWeight(bookmarks, historyConfig.historyMonths);
   }
 
@@ -330,19 +336,11 @@ async function scanAllBookmarks(progressCallback) {
   return result;
 }
 
-// 首次安装：自动运行全量扫描（LLM 未配置时使用预置关键词分类）
+// 首次安装：不再自动扫描，等待用户同意数据使用授权后手动操作
 // 升级/重载：用户配置自动保留（chrome.storage 持久化），无需迁移逻辑
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
-    const stored = await chrome.storage.local.get(FIRST_SCAN_DONE_KEY);
-    if (!stored[FIRST_SCAN_DONE_KEY]) {
-      try {
-        await scanAllBookmarks(() => {});
-      } catch (e) {
-        console.error('首次安装全量扫描失败:', e);
-      }
-      await chrome.storage.local.set({ [FIRST_SCAN_DONE_KEY]: true });
-    }
+    // 不再自动扫描，用户需先同意 consent 后再使用
   }
     if (details.reason === 'update') {
       // 验证配置完整性：读取并恢复，如有损坏自动重置为默认值
@@ -361,17 +359,24 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
     case 'analyze':
-      analyzeBookmarks((progress) => {
-        currentProgress = progress;
-        chrome.runtime.sendMessage({ action: 'progress', progress }).catch(() => {});
-      }).then(result => {
-        currentProgress = { ...currentProgress, status: 'idle' };
-        sendResponse(result);
-      })
-        .catch(e => {
-          console.error('分析过程异常:', e?.message || e);
-          sendResponse({ results: [], total: 0, cancelled: true, error: true });
-        });
+      (async () => {
+        const consentStored = await chrome.storage.local.get(CONSENT_KEY);
+        if (!consentStored[CONSENT_KEY]) {
+          sendResponse({ results: [], total: 0, cancelled: true, error: 'consent_required' });
+          return;
+        }
+        analyzeBookmarks((progress) => {
+          currentProgress = progress;
+          chrome.runtime.sendMessage({ action: 'progress', progress }).catch(() => {});
+        }).then(result => {
+          currentProgress = { ...currentProgress, status: 'idle' };
+          sendResponse(result);
+        })
+          .catch(e => {
+            console.error('分析过程异常:', e?.message || e);
+            sendResponse({ results: [], total: 0, cancelled: true, error: true });
+          });
+      })();
       return true;
 
     case 'organize':
@@ -396,6 +401,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     case 'getHistory':
       (async () => {
+        const privacyStored = await chrome.storage.local.get(PRIVACY_CONFIG_KEY);
+        const privacy = { ...DEFAULT_PRIVACY_CONFIG, ...(privacyStored[PRIVACY_CONFIG_KEY] || {}) };
+        if (!privacy.allowHistory) {
+          sendResponse({ totalVisits: 0, uniqueDomains: 0, uniqueUrls: 0, topSites: [], periodMonths: 3 });
+          return;
+        }
         const hc = await getHistoryConfig();
         const summary = await getHistorySummary(hc.historyMonths);
         sendResponse(summary);
@@ -404,6 +415,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     case 'getTopSites':
       (async () => {
+        const privacyStored = await chrome.storage.local.get(PRIVACY_CONFIG_KEY);
+        const privacy = { ...DEFAULT_PRIVACY_CONFIG, ...(privacyStored[PRIVACY_CONFIG_KEY] || {}) };
+        if (!privacy.allowHistory) {
+          sendResponse([]);
+          return;
+        }
         const hc = await getHistoryConfig();
         const sites = await getTopSitesByHistory(hc.historyMonths, message.limit || 20);
         sendResponse(sites);
@@ -581,6 +598,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ success: true });
       return true;
 
+    case 'getConsentStatus':
+      (async () => {
+        const stored = await chrome.storage.local.get(CONSENT_KEY);
+        sendResponse({ consented: !!stored[CONSENT_KEY] });
+      })();
+      return true;
+
+    case 'setConsent':
+      (async () => {
+        await chrome.storage.local.set({ [CONSENT_KEY]: !!message.consented });
+        sendResponse({ success: true });
+      })();
+      return true;
+
+    case 'getPrivacyConfig':
+      (async () => {
+        const stored = await chrome.storage.local.get(PRIVACY_CONFIG_KEY);
+        sendResponse({ config: { ...DEFAULT_PRIVACY_CONFIG, ...(stored[PRIVACY_CONFIG_KEY] || {}) } });
+      })();
+      return true;
+
+    case 'savePrivacyConfig':
+      (async () => {
+        await chrome.storage.local.set({ [PRIVACY_CONFIG_KEY]: message.config });
+        sendResponse({ success: true });
+      })();
+      return true;
+
     default:
       sendResponse({ error: 'Unknown action' });
       return false;
@@ -666,6 +711,8 @@ async function classifyNewBookmark(id, bookmark) {
 
 async function onBookmarkCreated(id, bookmark) {
   if (!bookmark.url) return;
+  const consentStored = await chrome.storage.local.get(CONSENT_KEY);
+  if (!consentStored[CONSENT_KEY]) return;
 
   // 获取用户的当前分类文件夹名（新书签的当前位置）
   let currentFolderName = '未分类';

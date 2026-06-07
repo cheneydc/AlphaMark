@@ -188,6 +188,29 @@ const translations = {
     supportSidebarDesc: '如果你喜欢 AlphaMark，欢迎扫码赞赏 ❤️',
     supportSidebarWechat: '微信',
     supportSidebarAlipay: '支付宝',
+
+    // Consent overlay
+    consentTitle: '🔒 数据使用说明',
+    consentDesc: 'AlphaMark 需要以下权限来完成书签整理功能：',
+    consentBookmarks: '读取并分类书签',
+    consentHistory: '浏览历史（按访问频率排序书签）',
+    consentTab: '当前标签页（新书签时推荐分类）',
+    consentLocal: '所有数据仅在本地处理，不会上传到任何服务器。',
+    consentAI: 'AI 分析使用你自行配置的 API Key，数据直接发送到你指定的端点。',
+    consentPrivacy: '查看隐私政策',
+    consentAccept: '同意并继续',
+    consentDecline: '暂不启用',
+    consentDeclinedMsg: '你已拒绝数据使用授权。AlphaMark 将无法正常运行。你可以随时在设置页面重新开启。',
+    consentGoSettings: '前往设置',
+    consentDismiss: '知道了',
+
+    // Privacy settings (options)
+    sectionPrivacy: '📋 隐私设置',
+    privacyHistoryLabel: '允许读取浏览历史',
+    privacyHistoryHint: '关闭后分类时将不考虑访问频率权重',
+    privacyConsentReset: '重置数据使用授权',
+    privacyConsentResetHint: '重新显示首次使用的数据使用说明弹窗',
+    privacyConsentResetBtn: '重置授权',
   },
 
   en: {
@@ -374,6 +397,29 @@ const translations = {
     supportSidebarDesc: 'If you like AlphaMark, scan to support ❤️',
     supportSidebarWechat: 'WeChat',
     supportSidebarAlipay: 'Alipay',
+
+    // Consent overlay
+    consentTitle: '🔒 Data Usage Notice',
+    consentDesc: 'AlphaMark needs the following permissions to organize your bookmarks:',
+    consentBookmarks: 'Read and classify bookmarks',
+    consentHistory: 'Browsing history (sort bookmarks by visit frequency)',
+    consentTab: 'Current tab (suggest category for new bookmarks)',
+    consentLocal: 'All data is processed locally and never uploaded to any server.',
+    consentAI: 'AI analysis uses your own API key. Data is sent directly to your configured endpoint.',
+    consentPrivacy: 'View Privacy Policy',
+    consentAccept: 'Accept & Continue',
+    consentDecline: 'Not Now',
+    consentDeclinedMsg: 'You declined data usage authorization. AlphaMark will not function properly. You can re-enable it in settings at any time.',
+    consentGoSettings: 'Go to Settings',
+    consentDismiss: 'Got it',
+
+    // Privacy settings (options)
+    sectionPrivacy: '📋 Privacy Settings',
+    privacyHistoryLabel: 'Allow browsing history access',
+    privacyHistoryHint: 'When disabled, classification will not consider visit frequency',
+    privacyConsentReset: 'Reset data consent',
+    privacyConsentResetHint: 'Show the data usage notice again on next popup open',
+    privacyConsentResetBtn: 'Reset Consent',
   }
 };
 

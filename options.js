@@ -28,6 +28,9 @@ async function loadAllSettings() {
   document.getElementById('fetchPageContent').checked = config.fetchPageContent;
   document.getElementById('autoOrganizeOnBookmark').checked = config.autoOrganizeOnBookmark || false;
 
+  const privacyRes = await chrome.runtime.sendMessage({ action: 'getPrivacyConfig' });
+  document.getElementById('allowHistoryAccess').checked = privacyRes.config.allowHistory;
+
   document.getElementById('llmEnabled').checked = llmConfig.enabled;
   document.getElementById('llmApiKey').value = llmConfig.apiKey || '';
   document.getElementById('llmMaxCategories').value = llmConfig.maxCategories || 10;
@@ -77,6 +80,12 @@ function bindEvents() {
   document.getElementById('testLLMBtn').addEventListener('click', handleTestLLM);
   document.getElementById('confidenceThreshold').addEventListener('input', (e) => {
     document.getElementById('thresholdValue').textContent = e.target.value;
+  });
+
+  document.getElementById('resetConsentBtn').addEventListener('click', async () => {
+    await chrome.storage.local.remove('abookmark_user_consent');
+    await chrome.storage.local.remove('abookmark_consent_declined');
+    showToast(t('saved'));
   });
 
   // 添加分类按钮
@@ -197,6 +206,7 @@ async function saveSettings() {
     await sendMessageSafe({ action: 'saveConfig', config: featureConfig });
     await sendMessageSafe({ action: 'saveLLMConfig', config: llmConfig });
     await sendMessageSafe({ action: 'saveHistoryConfig', config: historyConfig });
+    await sendMessageSafe({ action: 'savePrivacyConfig', config: { allowHistory: document.getElementById('allowHistoryAccess').checked } });
 
     const items = document.querySelectorAll('.category-item');
     const newCategories = {};

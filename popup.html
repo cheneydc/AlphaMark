@@ -145,6 +145,38 @@
     </div>
   </div>
 
+  <!-- 数据使用授权弹窗 -->
+  <div id="consentOverlay" class="consent-overlay hidden">
+    <div class="consent-modal">
+      <h3 class="consent-title" data-i18n="consentTitle">🔒 数据使用说明</h3>
+      <p class="consent-desc" data-i18n="consentDesc">AlphaMark 需要以下权限来完成书签整理功能：</p>
+      <ul class="consent-list">
+        <li><span class="consent-icon">📑</span> <span data-i18n="consentBookmarks">读取并分类书签</span></li>
+        <li><span class="consent-icon">📊</span> <span data-i18n="consentHistory">浏览历史（按访问频率排序书签）</span></li>
+        <li><span class="consent-icon">🏷️</span> <span data-i18n="consentTab">当前标签页（新书签时推荐分类）</span></li>
+      </ul>
+      <p class="consent-note" data-i18n="consentLocal">所有数据仅在本地处理，不会上传到任何服务器。</p>
+      <p class="consent-note" data-i18n="consentAI">AI 分析使用你自行配置的 API Key，数据直接发送到你指定的端点。</p>
+      <a href="https://cheneydc.github.io/AlphaMark/privacy.html" target="_blank" class="consent-privacy-link" data-i18n="consentPrivacy">查看隐私政策</a>
+      <div class="consent-actions">
+        <button id="consentDeclineBtn" class="btn btn-secondary" data-i18n="consentDecline">暂不启用</button>
+        <button id="consentAcceptBtn" class="btn btn-primary" data-i18n="consentAccept">同意并继续</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 已拒绝授权提示 -->
+  <div id="consentDeclinedOverlay" class="consent-overlay hidden">
+    <div class="consent-modal">
+      <div class="consent-declined-icon">⚠️</div>
+      <p class="consent-declined-msg" data-i18n="consentDeclinedMsg">你已拒绝数据使用授权。AlphaMark 将无法正常运行。你可以随时在设置页面重新开启。</p>
+      <div class="consent-actions">
+        <button id="consentDismissBtn" class="btn btn-secondary" data-i18n="consentDismiss">知道了</button>
+        <button id="consentGoSettingsBtn" class="btn btn-primary" data-i18n="consentGoSettings">前往设置</button>
+      </div>
+    </div>
+  </div>
+
   <script src="popup.js" type="module"></script>
 </body>
 </html>

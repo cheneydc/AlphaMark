@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     await initLang();
     applyI18nToDOM();
+    await checkConsent();
     await loadBookmarkCount();
     await loadPendingSuggestions();
     await loadAiToggle();
@@ -182,6 +183,16 @@ function bindEvents() {
   document.getElementById('supportModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) hideSupportModal();
   });
+
+  // Consent buttons
+  document.getElementById('consentAcceptBtn').addEventListener('click', handleConsentAccept);
+  document.getElementById('consentDeclineBtn').addEventListener('click', handleConsentDecline);
+  document.getElementById('consentDismissBtn').addEventListener('click', () => {
+    document.getElementById('consentDeclinedOverlay').classList.add('hidden');
+  });
+  document.getElementById('consentGoSettingsBtn').addEventListener('click', () => {
+    chrome.runtime.openOptionsPage();
+  });
 }
 
 function showSupportModal() {
@@ -190,6 +201,55 @@ function showSupportModal() {
 
 function hideSupportModal() {
   document.getElementById('supportModal').classList.add('hidden');
+}
+
+// ===== Consent flow =====
+
+async function checkConsent() {
+  try {
+    const res = await chrome.runtime.sendMessage({ action: 'getConsentStatus' });
+    if (res.consented) return;
+    // Has user explicitly declined?
+    const declined = await chrome.storage.local.get('abookmark_consent_declined');
+    if (declined['abookmark_consent_declined']) {
+      showConsentDeclined();
+    } else {
+      showConsentOverlay();
+    }
+  } catch (e) {
+    // Background not reachable - show consent anyway
+    showConsentOverlay();
+  }
+}
+
+function showConsentOverlay() {
+  document.getElementById('consentOverlay').classList.remove('hidden');
+  disableMainUI(true);
+}
+
+function showConsentDeclined() {
+  document.getElementById('consentDeclinedOverlay').classList.remove('hidden');
+  disableMainUI(true);
+}
+
+function disableMainUI(disabled) {
+  const container = document.querySelector('.container');
+  if (container) {
+    container.style.pointerEvents = disabled ? 'none' : '';
+    container.style.opacity = disabled ? '0.3' : '';
+  }
+}
+
+async function handleConsentAccept() {
+  await chrome.runtime.sendMessage({ action: 'setConsent', consented: true });
+  document.getElementById('consentOverlay').classList.add('hidden');
+  disableMainUI(false);
+}
+
+async function handleConsentDecline() {
+  await chrome.storage.local.set({ 'abookmark_consent_declined': true });
+  document.getElementById('consentOverlay').classList.add('hidden');
+  showConsentDeclined();
 }
 
 function switchTab(tab) {
