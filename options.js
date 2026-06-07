@@ -28,8 +28,9 @@ async function loadAllSettings() {
   document.getElementById('fetchPageContent').checked = config.fetchPageContent;
   document.getElementById('autoOrganizeOnBookmark').checked = config.autoOrganizeOnBookmark || false;
 
-  const privacyRes = await chrome.runtime.sendMessage({ action: 'getPrivacyConfig' });
-  document.getElementById('allowHistoryAccess').checked = privacyRes.config.allowHistory;
+  const privacyStored = await chrome.storage.local.get('abookmark_privacy_config');
+  const privacyConfig = privacyStored['abookmark_privacy_config'] || { allowHistory: true };
+  document.getElementById('allowHistoryAccess').checked = privacyConfig.allowHistory;
 
   document.getElementById('llmEnabled').checked = llmConfig.enabled;
   document.getElementById('llmApiKey').value = llmConfig.apiKey || '';
@@ -206,7 +207,7 @@ async function saveSettings() {
     await sendMessageSafe({ action: 'saveConfig', config: featureConfig });
     await sendMessageSafe({ action: 'saveLLMConfig', config: llmConfig });
     await sendMessageSafe({ action: 'saveHistoryConfig', config: historyConfig });
-    await sendMessageSafe({ action: 'savePrivacyConfig', config: { allowHistory: document.getElementById('allowHistoryAccess').checked } });
+    await chrome.storage.local.set({ 'abookmark_privacy_config': { allowHistory: document.getElementById('allowHistoryAccess').checked } });
 
     const items = document.querySelectorAll('.category-item');
     const newCategories = {};

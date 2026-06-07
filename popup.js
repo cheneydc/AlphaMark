@@ -207,17 +207,14 @@ function hideSupportModal() {
 
 async function checkConsent() {
   try {
-    const res = await chrome.runtime.sendMessage({ action: 'getConsentStatus' });
-    if (res.consented) return;
-    // Has user explicitly declined?
-    const declined = await chrome.storage.local.get('abookmark_consent_declined');
-    if (declined['abookmark_consent_declined']) {
+    const stored = await chrome.storage.local.get(['abookmark_user_consent', 'abookmark_consent_declined']);
+    if (stored['abookmark_user_consent']) return;
+    if (stored['abookmark_consent_declined']) {
       showConsentDeclined();
     } else {
       showConsentOverlay();
     }
   } catch (e) {
-    // Background not reachable - show consent anyway
     showConsentOverlay();
   }
 }
@@ -241,7 +238,8 @@ function disableMainUI(disabled) {
 }
 
 async function handleConsentAccept() {
-  await chrome.runtime.sendMessage({ action: 'setConsent', consented: true });
+  await chrome.storage.local.set({ 'abookmark_user_consent': true });
+  await chrome.storage.local.remove('abookmark_consent_declined');
   document.getElementById('consentOverlay').classList.add('hidden');
   disableMainUI(false);
 }

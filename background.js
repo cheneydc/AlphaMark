@@ -598,34 +598,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ success: true });
       return true;
 
-    case 'getConsentStatus':
-      (async () => {
-        const stored = await chrome.storage.local.get(CONSENT_KEY);
-        sendResponse({ consented: !!stored[CONSENT_KEY] });
-      })();
-      return true;
-
-    case 'setConsent':
-      (async () => {
-        await chrome.storage.local.set({ [CONSENT_KEY]: !!message.consented });
-        sendResponse({ success: true });
-      })();
-      return true;
-
-    case 'getPrivacyConfig':
-      (async () => {
-        const stored = await chrome.storage.local.get(PRIVACY_CONFIG_KEY);
-        sendResponse({ config: { ...DEFAULT_PRIVACY_CONFIG, ...(stored[PRIVACY_CONFIG_KEY] || {}) } });
-      })();
-      return true;
-
-    case 'savePrivacyConfig':
-      (async () => {
-        await chrome.storage.local.set({ [PRIVACY_CONFIG_KEY]: message.config });
-        sendResponse({ success: true });
-      })();
-      return true;
-
     default:
       sendResponse({ error: 'Unknown action' });
       return false;
